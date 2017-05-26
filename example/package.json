@@ -1,0 +1,42 @@
+{
+  "name": "Example",
+  "version": "1.0.0",
+  "description": "Frontend development environment",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Zzzz",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-jest": "^20.0.3",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-dev-express": "^1.0.1",
+    "gulp-file-include": "^1.1.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-notify": "^3.0.0",
+    "gulp-order": "^1.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.1.1",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-webpack": "^1.5.0",
+    "jest": "^20.0.3",
+    "jshint": "^2.9.4",
+    "webpack": "^2.6.0"
+  }
+}
