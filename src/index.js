@@ -1,6 +1,10 @@
 /**
  * Created by zzzz on 2017/5/26.
  */
-import Sketch from './Sketch';
+// @flow
+
+"use strict";
+import Sketch from './Engine/Sketch';
+import Vector from './Geometry/Vector';
 
 export default Sketch;

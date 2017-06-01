@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/gulp-flowtype
+
+[include]
+../src/
+../__test__/
+
+[libs]
+
+[options]
+unsafe.enable_getters_and_setters=true
