@@ -1,7 +1,6 @@
 /**
  * Created by zzzz on 2017/5/28.
  */
-// @flow
 "use strict";
 import GeometryType from '../constants/GeometryType';
 import Plane, { Xform } from './Plane';
@@ -9,13 +8,8 @@ import Matrix from '../Math/Matrix';
 import typeof Point from './Point';
 
 export default class GeometryBase {
-    _geometryType: GeometryType;
-    _xform: Xform;
-    _translateMatrix: Matrix;
-    _rotateMatrix: Matrix;
-    constructor (plane: ?Plane, xform: ?Xform) {
+    constructor () {
         this.setDefault();
-
     }
 
     setDefault() {
@@ -25,19 +19,19 @@ export default class GeometryBase {
         this._geometryType = GeometryType.GEOMETRY_BASE;
     }
 
-    applyMatrix(plane: Matrix): void {
+    applyMatrix(plane): void {
         this.xform.matrix.multiply(plane);
     }
 
-    translate(x: number, y: number): void {
+    translate(x, y): void {
         this._translateMatrix.translate(x, y)
     }
 
-    translateObject(x: number, y: number): void {
+    translateObject(x, y): void {
         this.xform.translate(x, y);
     }
 
-    rotate(angle: number, origin?: Point): void {
+    rotate(angle, origin): void {
         if (origin) {
             const inverseMatrix = Matrix.inverse(this.plane.matrix);
             const vect = Matrix.multiplyVector(inverseMatrix, origin);
@@ -50,43 +44,43 @@ export default class GeometryBase {
         }
     }
 
-    get geometryType(): GeometryType {
+    get geometryType() {
         return this._geometryType;
     }
 
-    get plane(): Plane {
+    get plane() {
         const m = Matrix.multiply(this._translateMatrix, this._rotateMatrix);
         return new Plane(m);
     }
 
-    get translateMatrix(): Matrix {
+    get translateMatrix() {
         return this._translateMatrix;
     }
-    set translateMatrix(value: Matrix) {
+    set translateMatrix(value) {
         if (value instanceof Matrix) {
             this._translateMatrix = value;
         }
     }
 
-    get rotateMatrix(): Matrix {
+    get rotateMatrix() {
         return this._rotateMatrix;
     }
-    set rotateMatrix(value: Matrix) {
+    set rotateMatrix(value) {
         if (value instanceof Matrix) {
             this._rotateMatrix = value;
         }
     }
 
-    get xform(): Xform {
+    get xform() {
         return this._xform;
     }
-    set xform(value: Xform) {
+    set xform(value) {
         if (value instanceof Xform) {
             this._xform = value;
         }
     }
 
-    toString(): string {
+    toString() {
         return `${this.geometryType}<>`
     }
 

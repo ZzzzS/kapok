@@ -1,33 +1,27 @@
 /**
  * Created by zzzz on 2017/5/30.
  */
-// @flow
 "use strict";
-// import Vector from '../Geometry/Vector';
-// import Point from '../Geometry/Point';
 import GeometryType from '../constants/GeometryType';
 import { Xform } from '../Geometry/Plane';
 
-type SVGMatrix = {
-    a: number,
-    b: number,
-    c: number,
-    d: number,
-    e: number,
-    f: number,
-    multiply: Function,
-    translate: Function,
-    rotate: Function,
-    inverse: Function
-};
+// type SVGMatrix = {
+//     a: number,
+//     b: number,
+//     c: number,
+//     d: number,
+//     e: number,
+//     f: number,
+//     multiply: Function,
+//     translate: Function,
+//     rotate: Function,
+//     inverse: Function
+// };
 
 export default class Matrix {
-    _svgMatrix: SVGMatrix;
-    constructor(args: ?Array<number>) {
-        /*::` flow ignore */
+    constructor(args) {
         const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         this._svgMatrix = svgElement.createSVGMatrix();
-        /*:: flow ignore `;*/
 
         if (args) {
             this._svgMatrix.a = args[0];
@@ -43,31 +37,31 @@ export default class Matrix {
         this._svgMatrix = this._svgMatrix.inverse();
     }
 
-    static inverse(m: Matrix) {
+    static inverse(m) {
         const svgMatrix = m._svgMatrix.inverse();
         return new Matrix([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
     }
 
-    multiply(another: Matrix): void {
+    multiply(another) {
         this._svgMatrix = this._svgMatrix.multiply(another._svgMatrix);
     }
 
-    translate(x: number, y: number): void {
+    translate(x, y) {
         this._svgMatrix = this._svgMatrix.translate(x, y);
     }
 
-    rotate(angle: number): void {
+    rotate(angle) {
         this._svgMatrix = this._svgMatrix.rotate(angle);
     }
 
-    static multiply(a: Matrix | Xform, b: Matrix | Xform): Matrix {
+    static multiply(a, b) {
         const xformA: SVGMatrix = a instanceof Xform ? a.matrix.svgMatrix : a.svgMatrix;
         const xformB: SVGMatrix = b instanceof Xform ? b.matrix.svgMatrix : b.svgMatrix;
         const svgMatrix = xformA.multiply(xformB);
         return new Matrix([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
     }
 
-    static multiplyVector(xform: Matrix | Xform, vector: Vector): Vector {
+    static multiplyVector(xform, vector) {
         const Point = require("../Geometry/Point").default;
         const Vector = require("../Geometry/Vector").default;
         let matrix: Matrix = xform instanceof Xform ? xform.matrix : xform;
@@ -81,53 +75,53 @@ export default class Matrix {
     }
 
 
-    get a(): number {
+    get a() {
         return this._svgMatrix.a;
     }
-    set a(value: number) {
+    set a(value) {
         this._svgMatrix.a = value;
     }
 
-    get b(): number {
+    get b() {
         return this._svgMatrix.b;
     }
-    set b(value: number) {
+    set b(value) {
         this._svgMatrix.b = value;
     }
 
-    get c(): number {
+    get c() {
         return this._svgMatrix.c;
     }
-    set c(value: number) {
+    set c(value) {
         this._svgMatrix.c = value;
     }
 
-    get d(): number {
+    get d() {
         return this._svgMatrix.d;
     }
-    set d(value: number) {
+    set d(value) {
         this._svgMatrix.d = value;
     }
 
-    get e(): number {
+    get e() {
         return this._svgMatrix.e;
     }
-    set e(value: number) {
+    set e(value) {
         this._svgMatrix.e = value;
     }
 
-    get f(): number {
+    get f() {
         return this._svgMatrix.f;
     }
-    set f(value: number) {
+    set f(value) {
         this._svgMatrix.f = value;
     }
 
-    get svgMatrix(): SVGMatrix {
+    get svgMatrix() {
         return this._svgMatrix;
     }
 
-    get dataArray(): Array<number> {
+    get dataArray() {
         return [this.a, this.b, this.c, this.d, this.e, this.f];
     }
 }

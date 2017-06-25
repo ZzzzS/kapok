@@ -1,7 +1,6 @@
 /**
  * Created by zzzz on 2017/6/3.
  */
-// @flow
 "use strict";
 import typeUtil from '../utils/typeUtil';
 
@@ -19,46 +18,46 @@ export default class Config {
         this._planeVectorSize = 30;
     }
 
-    get pointSize(): number {
+    get pointSize() {
         return this._pointSize;
     }
-    set pointSize(value: number) {
+    set pointSize(value) {
         if (typeUtil.isRealNumber(value)) {
             this._pointSize = value;
         }
     }
 
-    get vectorArrowSize(): number {
+    get vectorArrowSize() {
         return this._vectorArrowSize;
     }
-    set vectorArrowSize(value: number) {
+    set vectorArrowSize(value) {
         if (typeUtil.isRealNumber(value)) {
             this._vectorArrowSize = value;
         }
     }
 
-    get canvasDefaultWidth(): number {
+    get canvasDefaultWidth() {
         return this._canvasDefaultWidth;
     }
-    set canvasDefaultWidth(value: number) {
+    set canvasDefaultWidth(value) {
         if (typeUtil.isRealNumber(value)) {
             this._canvasDefaultWidth = value;
         }
     }
 
-    get canvasDefaultHeight(): number {
+    get canvasDefaultHeight() {
         return this._canvasDefaultHeight;
     }
-    set canvasDefaultHeight(value: number) {
+    set canvasDefaultHeight(value) {
         if (typeUtil.isRealNumber(value)) {
             this._canvasDefaultHeight = value;
         }
     }
 
-    get planeVectorSize(): number {
+    get planeVectorSize() {
         return this._planeVectorSize;
     }
-    set planeVectorSize(value: number) {
+    set planeVectorSize(value) {
         if (typeUtil.isRealNumber(value)) {
             this._planeVectorSize = value;
         }

@@ -1,7 +1,6 @@
 /**
  * Created by zzzz on 2017/6/3.
  */
-// @flow
 "use strict";
 import GeometryBase from './GeometryBase';
 import Point from './Point';
@@ -9,9 +8,7 @@ import GeometryType from '../constants/GeometryType';
 import Vector from './Vector';
 
 export default class Line extends GeometryBase {
-    _startPt: Point;
-    _endPt: Point;
-    constructor(startPt: ?Point, endPt: ?Point) {
+    constructor(startPt, endPt) {
         super();
         if (startPt) {
             this.startPt = startPt;
@@ -27,26 +24,26 @@ export default class Line extends GeometryBase {
         this._geometryType = GeometryType.LINE;
     }
 
-    get startPt(): Point {
+    get startPt() {
         return this._startPt;
     }
-    set startPt(value: Point) {
+    set startPt(value) {
         if (value instanceof Point || value instanceof Vector) {
             this._startPt = value;
         }
     }
 
-    get endPt(): Point {
+    get endPt(){
         return this._endPt;
     }
-    set endPt(value: Point) {
+    set endPt(value) {
         console.log(value.geometryType === GeometryType.POINT);
         if (value instanceof Point || value instanceof Vector) {
             this._endPt = value;
         }
     }
 
-    getStartPoint(): Point {
+    getStartPoint() {
         const pt = new Point(this.startPt.x, this.startPt.y);
         pt.rotateMatrix = this.rotateMatrix;
         pt.translateMatrix = this.translateMatrix;
@@ -54,7 +51,7 @@ export default class Line extends GeometryBase {
         return pt;
     }
 
-    getEndPoint(): Point {
+    getEndPoint() {
         const pt = new Point(this.endPt.x, this.endPt.y);
         pt.rotateMatrix = this.rotateMatrix;
         pt.translateMatrix = this.translateMatrix;

@@ -1,16 +1,13 @@
 /**
  * Created by zzzz on 2017/5/31.
  */
-// @flow
 "use strict";
 import GeometryBase from './GeometryBase';
 import Point from './Point';
 import GeometryType from '../constants/GeometryType';
 
 export default class Polygon extends GeometryBase {
-    _vertexList: Array<Point>;
-
-    constructor(...vertexes: Array<Point>) {
+    constructor() {
         super();
 
         if (arguments.length < 4) {
@@ -25,7 +22,7 @@ export default class Polygon extends GeometryBase {
         this._geometryType = GeometryType.POLYGON;
     }
 
-    static createFromArray(...array: Array<number>): Polygon {
+    static createFromArray() {
         let numArray: Array<number> = [].slice.call(arguments);
         let pointArray: Array<Point> = [];
         if (arguments.length < 8) {
@@ -43,11 +40,11 @@ export default class Polygon extends GeometryBase {
         }
     }
 
-    get vertexList(): Array<Point> {
+    get vertexList() {
         return this._vertexList;
     }
 
-    getVertexList(): Array<Point> {
+    getVertexList() {
         return this._vertexList.map(vertex => {
             vertex.rotateMatrix = this.rotateMatrix;
             vertex.translateMatrix = this.translateMatrix;

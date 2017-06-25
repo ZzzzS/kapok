@@ -1,12 +1,9 @@
 /**
  * Created by zzzz on 2017/5/26.
  */
-// @flow
 "use strict";
 // require('ctx-polyfill');
 import RenderMapping from './Render/RenderMapping';
-import Vector from '../Geometry/Vector';
-import Plane from '../Geometry/Plane';
 import Config from './Config';
 
 /**
@@ -28,25 +25,13 @@ const addMouseMoveListerner = (element, cb) => {
 };
 
 export default class Sketch {
-    _renderMapping: Object;
-    _id: number;
-    _bgCtx: Object;
-    _mainCtx: Object;
-    _uiCtx: Object;
-    _autoLoop: boolean;
-    _frameCount: number;
-    _mouseX: number;
-    _mouseY: number;
-    _animationId: number;
-    _config: Config;
-
     /**
      * 初始化画布。
      * @memberOf Sketch
      * @param {(OptionsHasId|OptionsHasNoId)} options
      * @private
      */
-    constructor(options: Object) {
+    constructor(options) {
         let container,
             canvas_bg = null,
             canvas_main = null,
@@ -104,10 +89,8 @@ export default class Sketch {
                 container.style.height = height + 'px';
                 container.id = id;
 
-                /*::` flow ignore */
                 canvas.parentNode.insertBefore(container, canvas);
                 canvas.remove();
-                /*:: flow ignore `;*/
 
                 createCanvasLayers();
             } else {
@@ -139,7 +122,7 @@ export default class Sketch {
         }
     }
 
-    _handleMouseMove = (event: Object): void => {
+    _handleMouseMove = (event): void => {
         this._mouseX = event.offsetX;
         this._mouseY = event.offsetY;
     };
@@ -159,7 +142,7 @@ export default class Sketch {
         this._requestNextFrame(this._run);
     };
 
-    _requestNextFrame = (func: Function): void => {
+    _requestNextFrame = (func): void => {
         this._animationId = window.requestAnimationFrame(func);
     };
 
@@ -175,14 +158,12 @@ export default class Sketch {
         this._autoLoop = false;
     };
 
-    clean = (ctx: ?Object): void => {
+    clean = (ctx): void => {
         if (ctx === undefined) ctx = this._mainCtx;
-        /*::` flow ignore */
         ctx.clearRect(0, 0, this.width, this.height);
-        /*:: flow ignore `;*/
     };
 
-    _draw(ctx: Object, config: Config, geo: Object, plane?: Plane | Vector, style: ?Object) {
+    _draw(ctx, config, geo, plane, style) {
         for (const type in this._renderMapping) {
             if (geo.geometryType === type) {
                 this._renderMapping[type].render(ctx, config, geo, plane, style);
@@ -190,43 +171,42 @@ export default class Sketch {
         }
     };
 
-    draw = (geo: Object, plane?: Plane | Vector, style: ?Object): void => {
+    draw = (geo, plane, style): void => {
         this._draw(this._mainCtx, this.config, geo, plane, style);
     };
 
-    get mouseX(): number {
+    get mouseX() {
         return this._mouseX || -1000;
     }
 
-    get mouseY(): number {
+    get mouseY() {
         return this._mouseY || -1000;
     }
 
-    get frameCount(): number {
+    get frameCount() {
         return this._frameCount;
     }
 
-    get width(): number {
+    get width() {
         return (this._bgCtx && this._bgCtx.canvas.width) || 0;
     }
 
-    get height(): number {
+    get height() {
         return (this._bgCtx && this._bgCtx.canvas.height) || 0;
     }
 
-    get loop(): Function {
+    get loop() {
         return this._loop;
     }
-    set loop(value: Function) {
+    set loop(value) {
         if (typeof value === 'function') {
             this._loop = value;
         }
     }
 
-    get config(): Config {
+    get config() {
         return this._config;
     }
-
 
 }
 

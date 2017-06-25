@@ -1,13 +1,11 @@
 /**
  * Created by zzzz on 2017/5/29.
  */
-// @flow
-
 "use strict";
 import typeUtil from './typeUtil';
 
 const arrayUtil = {
-    dropRight(array: Array<number>, length: number): Array<number> {
+    dropRight(array, length) {
         if (!typeUtil.isArray(array)) {
             throw new TypeError();
         }

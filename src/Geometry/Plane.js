@@ -1,17 +1,13 @@
 /**
  * Created by zzzz on 2017/5/30.
  */
-// @flow
 import Matrix from '../Math/Matrix';
 import typeof Vector from './Vector';
 import typeof Point from './Point';
 import GeometryType from '../constants/GeometryType';
 
 export class Xform {
-    _matrix: Matrix;
-    _geometryType: string;
-
-    constructor(matrix?: Matrix | Array<number>) {
+    constructor(matrix) {
         if (matrix && matrix instanceof Matrix) {
             this._matrix = new Matrix(matrix.dataArray);
         } else if (matrix && matrix instanceof Array) {
@@ -21,21 +17,21 @@ export class Xform {
         }
     }
 
-    translate(x: number, y: number): void {
+    translate(x, y) {
         this._matrix.translate(x, y);
     }
 
-    rotate(angle: number): void {
+    rotate(angle) {
         this._matrix.rotate(angle);
     }
 
-    get matrix(): Matrix {
+    get matrix() {
         return this._matrix;
     }
 }
 
 export default class Plane extends Xform{
-    constructor(matrix?: Matrix | Array<number>) {
+    constructor(matrix) {
         super(matrix);
         this.setDefault();
     }
@@ -44,37 +40,37 @@ export default class Plane extends Xform{
         this._geometryType = GeometryType.PLANE;
     }
 
-    get xAxis(): Vector {
+    get xAxis(){
         const Vector = require("./Vector").default;
         return new Vector(this._matrix.a, this._matrix.b);
     }
-    set xAxis(vect: Vector) {
+    set xAxis(vect) {
         this._matrix.a = vect.x;
         this._matrix.b = vect.y;
     }
 
-    get yAxis(): Vector {
+    get yAxis() {
         const Vector = require("./Vector").default;
         return new Vector(this._matrix.c, this._matrix.d);
     }
 
-    set yAxis(vect: Vector) {
+    set yAxis(vect) {
         this._matrix.c = vect.x;
         this._matrix.d = vect.y;
     }
 
-    get origin(): Point {
+    get origin() {
         const Point = require("./Point").default;
         return new Point(this._matrix.e, this._matrix.f);
     }
-    set origin(val: Point) {
+    set origin(val) {
         if (val instanceof Vector) {
             this._matrix.e = val.x;
             this._matrix.f = val.y;
         }
     }
 
-    get geometryType(): string {
+    get geometryType() {
         return this._geometryType;
     }
 }

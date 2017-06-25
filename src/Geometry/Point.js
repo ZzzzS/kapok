@@ -1,7 +1,6 @@
 /**
  * Created by zzzz on 2017/5/29.
  */
-// @flow
 "use strict";
 import Vector from './Vector';
 import GeometryType from '../constants/GeometryType';

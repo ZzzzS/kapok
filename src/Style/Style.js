@@ -1,14 +1,10 @@
 /**
  * Created by zzzz on 2017/6/3.
  */
-// @flow
 "use strict";
 
 export default class Style {
-    _strokeColor: string;
-    _fillColor: string;
-
-    constructor(strokeColor: ?string, fillColor: ?string) {
+    constructor(strokeColor, fillColor) {
         this._strokeColor = '#000000';
         this._fillColor = '#ffffff';
         if (strokeColor) {
@@ -19,16 +15,16 @@ export default class Style {
         }
     }
 
-    get strokeColor(): string {
+    get strokeColor() {
         return this._strokeColor;
     }
-    set strokeColor(value: string) {
+    set strokeColor(value) {
         this._strokeColor = value;
     }
-    get fillColor(): string {
+    get fillColor() {
         return this._fillColor;
     }
-    set fillColor(value: string) {
+    set fillColor(value) {
         this._fillColor = value;
     }
 }

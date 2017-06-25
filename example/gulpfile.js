@@ -80,7 +80,7 @@ gulp.task('watch', function () {
 // dev
 gulp.task('dev', ['clean'],  function () {
     process.env.NODE_ENV = 'development';
-    gulp.start('watch', 'flow', 'sass', 'script', 'image', 'html');
+    gulp.start('watch', 'sass', 'script', 'image', 'html');
 });
 
 // build
