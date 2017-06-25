@@ -3,39 +3,21 @@
  */
 // @flow
 "use strict";
+import GeometryBase from '../../Geometry/GeometryBase';
 import Polygon from '../../Geometry/Polygon';
-// import Matrix from '../../Math/Matrix';
-// console.log(Matrix);
+import Render from './Render';
 
-export default (ctx: Object, polygon: Polygon, style: Object): void => {
-    const Matrix = require('../../../src/Math/Matrix').default;
-    const pts = polygon.vertexList;
+export default class PolygonRender extends Render{
+    geometryRender(ctx: Object, geo: Polygon) {
+        super.geometryRender(ctx, geo);
+        const pts = geo.vertexList;
 
-    if (style) {
-        ctx.strokeStyle = style.strokeColor;
-        ctx.fillStyle = style.fillColor;
-    } else {
-        ctx.strokeStyle = '#000000';
-        ctx.fillStyle = '#ffffff';
+        pts.forEach(function (pt, index) {
+            if (index === 0) {
+                ctx.moveTo(pt.x, pt.y);
+            } else {
+                ctx.lineTo(pt.x, pt.y);
+            }
+        });
     }
-
-    const m: Matrix = Matrix.multiply(polygon.plane, polygon.xform);
-
-    ctx.save();
-    // console.log(m);
-    ctx.transform(...m.dataArray);
-    ctx.beginPath();
-
-    pts.forEach(function (pt, index) {
-        if (index === 0) {
-            ctx.moveTo(pt.x, pt.y);
-        } else {
-            ctx.lineTo(pt.x, pt.y);
-        }
-    });
-
-    ctx.closePath();
-    ctx.restore();
-    ctx.stroke();
-    ctx.fill();
-};
+}

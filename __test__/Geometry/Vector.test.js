@@ -5,6 +5,12 @@
 import Vector from '../../src/Geometry/Vector';
 import GeometryType from '../../src/constants/GeometryType';
 
+document.createElementNS = () => {
+    return {
+        createSVGMatrix: () => {}
+    }
+};
+
 test('Vector的默认值为{x: 0, y: 0}', () => {
     const vect = new Vector();
     expect(vect.x).toBe(0);

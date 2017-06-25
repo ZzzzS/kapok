@@ -65,6 +65,15 @@ export default class Vector extends GeometryBase{
         return Matrix.multiplyVector(m, this);
     }
 
+    get norm(): number {
+        return global.Math.sqrt(global.Math.pow(this.x, 2) + global.Math.pow(this.y, 2));
+    }
+
+    get angle(): number {
+        if (this.x === 0 && this.y === 0) return 0;
+        return this.y > 0 ? global.Math.acos(this.x / this.norm) : -global.Math.acos(this.x / this.norm);
+    }
+
     toString(): string {
         return `${this.geometryType}<${this.x}, ${this.y}>`
     }

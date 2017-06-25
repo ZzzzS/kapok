@@ -3,8 +3,8 @@
  */
 // @flow
 "use strict";
-import Vector from '../Geometry/Vector';
-import Point from '../Geometry/Point';
+// import Vector from '../Geometry/Vector';
+// import Point from '../Geometry/Point';
 import GeometryType from '../constants/GeometryType';
 import { Xform } from '../Geometry/Plane';
 
@@ -17,7 +17,8 @@ type SVGMatrix = {
     f: number,
     multiply: Function,
     translate: Function,
-    rotate: Function
+    rotate: Function,
+    inverse: Function
 };
 
 export default class Matrix {
@@ -67,6 +68,8 @@ export default class Matrix {
     }
 
     static multiplyVector(xform: Matrix | Xform, vector: Vector): Vector {
+        const Point = require("../Geometry/Point").default;
+        const Vector = require("../Geometry/Vector").default;
         let matrix: Matrix = xform instanceof Xform ? xform.matrix : xform;
         const x = vector.x * matrix.a + vector.y * matrix.c + matrix.e;
         const y = vector.x * matrix.b + vector.y * matrix.d + matrix.f;

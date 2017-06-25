@@ -5,6 +5,12 @@
 import Point from '../../src/Geometry/Point';
 import GeometryType from '../../src/constants/GeometryType';
 
+document.createElementNS = () => {
+    return {
+        createSVGMatrix: () => {}
+    }
+};
+
 test('Point的默认值为{x: 0, y: 0}', () => {
     const point = new Point();
     expect(point.x).toBe(0);

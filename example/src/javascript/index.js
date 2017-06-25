@@ -7,68 +7,44 @@ import Vector from '../../../src/Geometry/Vector';
 import Point from '../../../src/Geometry/Point';
 import Plane from '../../../src/Geometry/Plane';
 import Polygon from '../../../src/Geometry/Polygon';
+import Line from '../../../src/Geometry/Line';
 
-const matrix1 = new Matrix();
-const matrix2 = new Matrix([1,2,3,4,5,6]);
-const matrix3 = new Matrix([2,0,0,5,0,0]);
-const vect = new Vector(2, 5);
 const pt1 = new Point(20, 50);
-const plane = new Plane();
 const polygon: Polygon = Polygon.createFromArray(0, 0, 20, 5, 35, 15, 30, 40, 10, 40);
 const pts = polygon.getVertexList();
-
-pt1.plane.translate(10, 20);
-console.log(pt1.plane);
-console.log(pt1);
-
-// vect.applyMatrix(matrix2);
-// pt.applyMatrix();
-// console.log(pt);
-
-// matrix1.multiply(matrix2);
-
-// matrix3.multiply(matrix2);
-
-
-// const sketch = new Sketch({
-//     containerId: 'sketch',
-//     width: 300,
-//     height: 200
-// });
-
-// sketch.autoLoop();
 const sketch = new Sketch({id: 'canvas'});
-// sketch.noLoop();
+const vect = new Vector(30, 50);
+const line = new Line(new Point(20, 20), new Point(50, 30));
+console.log(line);
+console.log(pt1 instanceof Point);
+console.log(pt1 instanceof Vector);
+
+polygon.translate(50, 30);
+console.log(polygon);
+
 pt1.translate(100, 100);
-// polygon.translate(50, 50);
-console.log(pt1.plane);
-// pt1.rotate(30);
-// const translate = new Matrix([1, 0, 1, 0, 1, 0]);
 sketch.loop = () => {
-    // console.log(sketch.mouseX);
     sketch.clean();
     sketch.draw(new Point(55, 55));
-    polygon.plane.translate(1, 0);
-    // polygon.translate(0.1, 0);
-    polygon.rotate(10, new Point(55, 55));
+    polygon.translate(0.1, 0);
+    polygon.translateObject(0.05, 0);
+    polygon.rotate(1);
     sketch.draw(polygon);
     for (let pt of pts) {
         sketch.draw(pt);
     }
 
-    pt1.translate(1, 0);
-    pt1.plane.translate(1, 0);
-    // pt1.translateWorld(1, 0);
-    // pt1.applyMatrix(translate);
-    pt1.rotate(1);
+    pt1.translate(0.1, 0);
+    pt1.xform.rotate(1);
 
-    // pt1.applyMatrix2(translate);
     sketch.draw(pt1);
     const pt = new Point(sketch.mouseX, sketch.mouseY);
     sketch.draw(pt);
+
+    sketch.draw(vect, new Point(10, 10));
+    sketch.draw(polygon.plane);
+    sketch.draw(line);
 };
-//
-// console.log(sketch);
 
 
 // function testFunctionTime(fn) {
@@ -104,7 +80,7 @@ sketch.loop = () => {
 //     throw 'XXX';
 // }).catch(e => console.log(e));
 
-const m = new Matrix();
-m.translate(10, 10);
-const mm = m._svgMatrix.inverse();
-console.log(mm);
+// const m = new Matrix();
+// m.translate(10, 10);
+// const mm = m._svgMatrix.inverse();
+// console.log(mm);

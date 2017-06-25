@@ -5,6 +5,9 @@
 "use strict";
 // require('ctx-polyfill');
 import RenderMapping from './Render/RenderMapping';
+import Vector from '../Geometry/Vector';
+import Plane from '../Geometry/Plane';
+import Config from './Config';
 
 /**
  * 用于在document中选择一个canvas作为画布
@@ -35,6 +38,7 @@ export default class Sketch {
     _mouseX: number;
     _mouseY: number;
     _animationId: number;
+    _config: Config;
 
     /**
      * 初始化画布。
@@ -52,6 +56,7 @@ export default class Sketch {
             fragment;
 
         this._renderMapping = RenderMapping;
+        this._config = new Config;
 
         const createCanvasLayers = () => {
             fragment = document.createDocumentFragment();
@@ -177,19 +182,16 @@ export default class Sketch {
         /*:: flow ignore `;*/
     };
 
-    _draw(ctx: Object, geo: Object, style: ?Object) {
-        // if (!util.isGeometry(geo)) {
-        //     throw new TypeError('Only \'Geometry\' is accepted');
-        // }
+    _draw(ctx: Object, config: Config, geo: Object, plane?: Plane | Vector, style: ?Object) {
         for (const type in this._renderMapping) {
             if (geo.geometryType === type) {
-                this._renderMapping[type].render.call(this, ctx, geo, style);
+                this._renderMapping[type].render(ctx, config, geo, plane, style);
             }
         }
     };
 
-    draw = (geo: Object, style?: Object): void => {
-        this._draw(this._mainCtx, geo, style);
+    draw = (geo: Object, plane?: Plane | Vector, style: ?Object): void => {
+        this._draw(this._mainCtx, this.config, geo, plane, style);
     };
 
     get mouseX(): number {
@@ -220,5 +222,11 @@ export default class Sketch {
             this._loop = value;
         }
     }
+
+    get config(): Config {
+        return this._config;
+    }
+
+
 }
 

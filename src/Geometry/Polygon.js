@@ -49,7 +49,8 @@ export default class Polygon extends GeometryBase {
 
     getVertexList(): Array<Point> {
         return this._vertexList.map(vertex => {
-            vertex.plane = this.plane;
+            vertex.rotateMatrix = this.rotateMatrix;
+            vertex.translateMatrix = this.translateMatrix;
             vertex.xform = this.xform;
             return vertex;
         });
