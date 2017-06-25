@@ -8,16 +8,16 @@ import typeUtil from '../utils/typeUtil';
 import Matrix from '../Math/Matrix';
 
 export default class Vector extends GeometryBase{
-    constructor(x, y) {
-        super();
+    constructor(x, y, plane) {
+        super(plane);
         if (typeUtil.isRealNumber(x) && typeUtil.isRealNumber(y)) {
             this.x = x;
             this.y = y;
         }
     }
 
-    setDefault(){
-        super.setDefault();
+    setDefault(...args){
+        super.setDefault(...args);
         this._x = 0;
         this._y = 0;
         this._geometryType = GeometryType.VECTOR;

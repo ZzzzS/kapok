@@ -3,14 +3,14 @@
  */
 import Matrix from '../Math/Matrix';
 import typeof Vector from './Vector';
-import typeof Point from './Point';
 import GeometryType from '../constants/GeometryType';
+import typeUtil from '../utils/typeUtil';
 
 export class Xform {
     constructor(matrix) {
-        if (matrix && matrix instanceof Matrix) {
+        if (matrix && Matrix.isMatrix(matrix)) {
             this._matrix = new Matrix(matrix.dataArray);
-        } else if (matrix && matrix instanceof Array) {
+        } else if (matrix && typeUtil.isArray(matrix)) {
             this._matrix = new Matrix(matrix);
         } else {
             this._matrix = new Matrix;

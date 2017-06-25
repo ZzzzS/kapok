@@ -18,6 +18,13 @@ const line = new Line(new Point(20, 20), new Point(50, 30));
 console.log(line);
 console.log(pt1 instanceof Point);
 console.log(pt1 instanceof Vector);
+console.log(new Matrix([1, 0, 0, 1, 50, 100]));
+
+const pl = new Plane(new Matrix([1, 0, 0, 1, 50, 100]));
+console.log(pl);
+
+const pt3 = new Point(30, 20, pl);
+console.log(pt3);
 
 polygon.translate(50, 30);
 console.log(polygon);
@@ -43,6 +50,8 @@ sketch.loop = () => {
 
     sketch.draw(vect, new Point(10, 10));
     sketch.draw(polygon.plane);
+    sketch.draw(pl);
+    sketch.draw(pt3);
     sketch.draw(line);
 };
 

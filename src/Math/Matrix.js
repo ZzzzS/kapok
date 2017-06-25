@@ -4,6 +4,7 @@
 "use strict";
 import GeometryType from '../constants/GeometryType';
 import { Xform } from '../Geometry/Plane';
+import Type from '../constants/Type';
 
 // type SVGMatrix = {
 //     a: number,
@@ -23,6 +24,8 @@ export default class Matrix {
         const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         this._svgMatrix = svgElement.createSVGMatrix();
 
+        this.type = Type.MATRIX;
+
         if (args) {
             this._svgMatrix.a = args[0];
             this._svgMatrix.b = args[1];
@@ -31,6 +34,10 @@ export default class Matrix {
             this._svgMatrix.e = args[4];
             this._svgMatrix.f = args[5];
         }
+    }
+
+    static isMatrix(obj) {
+        return obj.type === Type.MATRIX;
     }
 
     inverse() {
