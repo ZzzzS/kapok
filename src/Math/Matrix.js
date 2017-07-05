@@ -2,22 +2,7 @@
  * Created by zzzz on 2017/5/30.
  */
 "use strict";
-import GeometryType from '../constants/GeometryType';
-import { Xform } from '../Geometry/Plane';
 import Type from '../constants/Type';
-
-// type SVGMatrix = {
-//     a: number,
-//     b: number,
-//     c: number,
-//     d: number,
-//     e: number,
-//     f: number,
-//     multiply: Function,
-//     translate: Function,
-//     rotate: Function,
-//     inverse: Function
-// };
 
 export default class Matrix {
     constructor(args) {
@@ -62,25 +47,11 @@ export default class Matrix {
     }
 
     static multiply(a, b) {
-        const xformA: SVGMatrix = a instanceof Xform ? a.matrix.svgMatrix : a.svgMatrix;
-        const xformB: SVGMatrix = b instanceof Xform ? b.matrix.svgMatrix : b.svgMatrix;
-        const svgMatrix = xformA.multiply(xformB);
+        const matrixA = a.svgMatrix;
+        const matrixB = b.svgMatrix;
+        const svgMatrix = matrixA.multiply(matrixB);
         return new Matrix([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
     }
-
-    static multiplyVector(xform, vector) {
-        const Point = require("../Geometry/Point").default;
-        const Vector = require("../Geometry/Vector").default;
-        let matrix: Matrix = xform instanceof Xform ? xform.matrix : xform;
-        const x = vector.x * matrix.a + vector.y * matrix.c + matrix.e;
-        const y = vector.x * matrix.b + vector.y * matrix.d + matrix.f;
-        if (vector.geometryType === GeometryType.VECTOR) {
-            return new Vector(x, y);
-        } else {
-            return new Point(x, y);
-        }
-    }
-
 
     get a() {
         return this._svgMatrix.a;

@@ -17,7 +17,6 @@ const jshint = require('gulp-jshint');
 const uglify = require('gulp-uglify');
 const webpack = require('gulp-webpack');
 const gulpif = require('gulp-if');
-const flow = require('gulp-flowtype');
 
 const jsPaths = ['src/javascript/**/*.js', '../src/**/*.js'];
 
@@ -72,7 +71,7 @@ gulp.task('clean', function() {
 gulp.task('watch', function () {
     gulp.watch(jsPaths, express('server.js'));
     gulp.watch('src/style/**/*.scss', ['sass']);
-    gulp.watch(jsPaths, ['flow', 'script']);
+    gulp.watch(jsPaths, ['script']);
     gulp.watch('src/image/**/*', ['image']);
     gulp.watch('src/**/*.html', ['html']);
 });
@@ -86,21 +85,10 @@ gulp.task('dev', ['clean'],  function () {
 // build
 gulp.task('build', ['clean'], function() {
     process.env.NODE_ENV = 'production';
-    gulp.start('sass', 'flow', 'script', 'image', 'html');
+    gulp.start('sass', 'script', 'image', 'html');
 });
 
 // default
 gulp.task('default', function() {
     gulp.start('dev');
-});
-
-// flow
-gulp.task('flow', () => {
-    gulp.src(jsPaths)
-        .pipe(flow({ killFlow: false }));
-});
-
-gulp.task('test.flow', () => {
-    gulp.src('../__test__/**/*.js')
-        .pipe(flow({ killFlow: false }));
 });

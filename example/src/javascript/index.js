@@ -1,5 +1,6 @@
 "use strict";
-/* @flow */
+require('./drawPoints');
+require('./drawLines');
 
 import Sketch from '../../../src/index';
 import Matrix from '../../../src/Math/Matrix';
@@ -9,10 +10,11 @@ import Plane from '../../../src/Geometry/Plane';
 import Polygon from '../../../src/Geometry/Polygon';
 import Line from '../../../src/Geometry/Line';
 
+
 const pt1 = new Point(20, 50);
 const polygon: Polygon = Polygon.createFromArray(0, 0, 20, 5, 35, 15, 30, 40, 10, 40);
 const pts = polygon.getVertexList();
-const sketch = new Sketch({id: 'canvas'});
+const sketch = new Sketch({id: 'sketch'});
 const vect = new Vector(30, 50);
 const line = new Line(new Point(20, 20), new Point(50, 30));
 console.log(line);

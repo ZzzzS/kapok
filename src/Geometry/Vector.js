@@ -57,8 +57,8 @@ export default class Vector extends GeometryBase{
     }
 
     get positionOfWorld() {
-        const m = Matrix.multiply(this.plane, this.xform);
-        return Matrix.multiplyVector(m, this);
+        const m = Matrix.multiply(this.plane.matrix, this.xform.matrix);
+        return Vector.multiplyMatrix(this, m);
     }
 
     get norm() {
@@ -72,6 +72,12 @@ export default class Vector extends GeometryBase{
 
     toString() {
         return `${this.geometryType}<${this.x}, ${this.y}>`
+    }
+
+    static multiplyMatrix(vector, matrix) {
+        const x = vector.x * matrix.a + vector.y * matrix.c + matrix.e;
+        const y = vector.x * matrix.b + vector.y * matrix.d + matrix.f;
+        return new Vector(x, y);
     }
 
 };

@@ -20,19 +20,19 @@ export default class GeometryBase {
         this._geometryType = GeometryType.GEOMETRY_BASE;
     }
 
-    applyMatrix(plane): void {
+    applyMatrix(plane) {
         this.xform.matrix.multiply(plane);
     }
 
-    translate(x, y): void {
+    translate(x, y) {
         this._translateMatrix.translate(x, y)
     }
 
-    translateObject(x, y): void {
+    translateObject(x, y) {
         this.xform.translate(x, y);
     }
 
-    rotate(angle, origin): void {
+    rotate(angle, origin) {
         if (origin) {
             const inverseMatrix = Matrix.inverse(this.plane.matrix);
             const vect = Matrix.multiplyVector(inverseMatrix, origin);
@@ -56,7 +56,6 @@ export default class GeometryBase {
 
     set plane(value) {
         if (typeUtil.isPlane(value)) {
-            console.log(value);
             const matrix = value.matrix;
             const translateMatrix = new Matrix([1, 0, 0, 1, matrix.e, matrix.f]);
             const rotateMatrix = new Matrix([matrix.a, matrix.b, matrix.c, matrix.d, 0, 0]);

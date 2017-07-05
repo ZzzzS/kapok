@@ -6,6 +6,8 @@ import GeometryBase from './GeometryBase';
 import Point from './Point';
 import GeometryType from '../constants/GeometryType';
 import Vector from './Vector';
+import typeUtil from '../utils/typeUtil';
+import arrayUtil from '../utils/arrayUtil';
 
 export default class Line extends GeometryBase {
     constructor(startPt, endPt) {
@@ -16,6 +18,11 @@ export default class Line extends GeometryBase {
         if (endPt) {
             this.endPt = endPt;
         }
+    }
+
+    static createFromArray(array) {
+        array = arrayUtil.dropRight(array, 4);
+        return new Line(new Point(array[0], array[1]), new Point(array[2], array[3]));
     }
 
     setDefault() {

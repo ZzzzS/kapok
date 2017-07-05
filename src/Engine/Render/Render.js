@@ -44,7 +44,7 @@ export default class Render {
     }
 
     geometryRender(ctx: Object, geo: any) {
-        const m: Matrix = Matrix.multiply(geo.plane, geo.xform);
+        const m: Matrix = Matrix.multiply(geo.plane.matrix, geo.xform.matrix);
         ctx.transform(...m.dataArray);
     }
 }
