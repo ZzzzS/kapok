@@ -5,13 +5,12 @@
 import GeometryBase from './GeometryBase';
 import Point from './Point';
 import GeometryType from '../constants/GeometryType';
-import Vector from './Vector';
 import typeUtil from '../utils/typeUtil';
 import arrayUtil from '../utils/arrayUtil';
 
 export default class Line extends GeometryBase {
-    constructor(startPt, endPt) {
-        super();
+    constructor(startPt, endPt, plane) {
+        super(plane);
         if (startPt) {
             this.startPt = startPt;
         }
@@ -25,17 +24,20 @@ export default class Line extends GeometryBase {
         return new Line(new Point(array[0], array[1]), new Point(array[2], array[3]));
     }
 
-    setDefault() {
+    setDefault(...args) {
+        super.setDefault(...args);
         this._startPt = new Point(0, 0);
         this._endPt = new Point(30, 30);
-        this._geometryType = GeometryType.LINE;
+        this._inheritanceChain.push(GeometryType.LINE);
+
     }
 
     get startPt() {
         return this._startPt;
     }
     set startPt(value) {
-        if (value instanceof Point || value instanceof Vector) {
+        if (value.type === typeUtil.VECTOR) value = new Point(value.x, value.y);
+        if (value.type === typeUtil.POINT) {
             this._startPt = value;
         }
     }
@@ -44,8 +46,8 @@ export default class Line extends GeometryBase {
         return this._endPt;
     }
     set endPt(value) {
-        console.log(value.geometryType === GeometryType.POINT);
-        if (value instanceof Point || value instanceof Vector) {
+        if (value.type === typeUtil.VECTOR) value = new Point(value.x, value.y);
+        if (value.type === typeUtil.POINT) {
             this._endPt = value;
         }
     }

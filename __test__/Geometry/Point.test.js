@@ -2,17 +2,17 @@
  * Created by zzzz on 2017/5/29.
  */
 "use strict";
-import Point from '../../src/Geometry/Point';
-import GeometryType from '../../src/constants/GeometryType';
 
-document.createElementNS = () => {
-    return {
-        createSVGMatrix: () => {}
-    }
-};
+require("SVGMatrix");
+import Point from '../../src/Geometry/Point';
+
+let point;
+
+beforeEach(() => {
+    point = new Point();
+});
 
 test('Point的默认值为{x: 0, y: 0}', () => {
-    const point = new Point();
     expect(point.x).toBe(0);
     expect(point.y).toBe(0);
 });
@@ -37,7 +37,16 @@ test('当new Vector带参数时，必须同时提供两个非0的number参数, �
     expect(point.y).toBe(100);
 });
 
-test(`GeometryType === ${GeometryType.POINT}`, () => {
-    const point = new Point();
-    expect(point.geometryType).toBe(GeometryType.POINT);
+test("point.geometryType", () => {
+    expect(point.geometryType.toLowerCase()).toContain("point");
+});
+
+test("point.copy", () => {
+    const newPoint = point.copy();
+    expect(newPoint.geometryType.toLowerCase()).toContain("point");
+    expect(newPoint.x).toBe(point.x);
+    expect(newPoint.y).toBe(point.x);
+    expect(newPoint.plane.dataArray).toEqual(point.plane.dataArray);
+    expect(newPoint.plane == point.plane).toBeFalsy();
+    expect(newPoint == point).toBeFalsy();
 });

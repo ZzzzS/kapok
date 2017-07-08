@@ -4,11 +4,12 @@
 "use strict";
 import GeometryType from '../constants/GeometryType';
 import Plane, { Xform } from './Plane';
-import Matrix from '../Math/Matrix';
+import Matrix from '../Matrix/Matrix';
 import typeUtil from '../utils/typeUtil';
 
 export default class GeometryBase {
     constructor (plane) {
+        this._inheritanceChain = [];
         this.setDefault(plane);
     }
 
@@ -17,11 +18,11 @@ export default class GeometryBase {
         this._translateMatrix = new Matrix;
         this._rotateMatrix = new Matrix;
         plane && (this.plane = plane);
-        this._geometryType = GeometryType.GEOMETRY_BASE;
+        this._inheritanceChain.push(GeometryType.GEOMETRY_BASE);
     }
 
     applyMatrix(plane) {
-        this.xform.matrix.multiply(plane);
+        this._xform.multiply(plane);
     }
 
     translate(x, y) {
@@ -29,7 +30,7 @@ export default class GeometryBase {
     }
 
     translateObject(x, y) {
-        this.xform.translate(x, y);
+        this._xform.translate(x, y);
     }
 
     rotate(angle, origin) {
@@ -46,14 +47,13 @@ export default class GeometryBase {
     }
 
     get geometryType() {
-        return this._geometryType;
+        return this._inheritanceChain[this._inheritanceChain.length - 1];
     }
 
     get plane() {
         const m = Matrix.multiply(this._translateMatrix, this._rotateMatrix);
         return new Plane(m);
     }
-
     set plane(value) {
         if (typeUtil.isPlane(value)) {
             const matrix = value.matrix;
@@ -68,7 +68,7 @@ export default class GeometryBase {
         return this._translateMatrix;
     }
     set translateMatrix(value) {
-        if (value instanceof Matrix) {
+        if (typeUtil.isMatrix(value)) {
             this._translateMatrix = value;
         }
     }
@@ -77,7 +77,7 @@ export default class GeometryBase {
         return this._rotateMatrix;
     }
     set rotateMatrix(value) {
-        if (value instanceof Matrix) {
+        if (typeUtil.isMatrix(value)) {
             this._rotateMatrix = value;
         }
     }
@@ -86,7 +86,7 @@ export default class GeometryBase {
         return this._xform;
     }
     set xform(value) {
-        if (value instanceof Xform) {
+        if (typeUtil.isXform(value)) {
             this._xform = value;
         }
     }

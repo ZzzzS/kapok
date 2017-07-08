@@ -1,49 +1,55 @@
 /**
  * Created by zzzz on 2017/6/3.
  */
-// @flow
 "use strict";
-import GeometryBase from '../../Geometry/GeometryBase';
-import Matrix from '../../Math/Matrix';
-import Plane from '../../Geometry/Plane';
-import Vector from '../../Geometry/Vector';
-import typeof Config from '../Config';
+
+import Matrix from '../../Matrix/Matrix';
 import Style from '../../Style/Style';
+import typeUtil from '../../utils/typeUtil';
+
+const setStyle = function (ctx, style) {
+    if (style) {
+        ctx.strokeStyle = style.strokeColor;
+        ctx.fillStyle = style.fillColor;
+    } else {
+        const style = new Style;
+        ctx.strokeStyle = style.strokeColor;
+        ctx.fillStyle = style.fillColor;
+    }
+};
+
+const beforeRender = function (ctx, plane) {
+    ctx.save();
+    if (plane) {
+        if (typeUtil.isPlane(plane)) {
+            ctx.transform(...plane.matrix.dataArray);
+        } else if (typeUtil.isVector(plane)) {
+            ctx.translate(plane.x, plane.y);
+        }
+    }
+    ctx.beginPath();
+};
+
+const afterRender = function (ctx) {
+    ctx.closePath();
+    ctx.restore();
+    ctx.stroke();
+    ctx.fill();
+};
 
 export default class Render {
-    config: Config;
-
-    render(ctx: Object, config:Config, geo: any | Plane, plane?: Plane | Vector, style?: Object): void {
+    render(ctx, config, geo, plane, style) {
         this.config = config;
 
-        if (style) {
-            ctx.strokeStyle = style.strokeColor;
-            ctx.fillStyle = style.fillColor;
-        } else {
-            const style = new Style;
-            ctx.strokeStyle = style.strokeColor;
-            ctx.fillStyle = style.fillColor;
-        }
-
-        ctx.save();
-        if (plane) {
-            if (plane instanceof Plane) {
-                ctx.transform(...plane.matrix.dataArray);
-            } else if (plane instanceof Vector) {
-                ctx.translate(plane.x, plane.y);
-            }
-        }
-        ctx.beginPath();
-
+        setStyle(ctx, style);
+        beforeRender(ctx, plane);
         this.geometryRender(ctx, geo);
-
-        ctx.closePath();
-        ctx.restore();
-        ctx.stroke();
-        ctx.fill();
+        afterRender(ctx);
     }
 
-    geometryRender(ctx: Object, geo: any) {
+
+
+    geometryRender(ctx, geo) {
         const m: Matrix = Matrix.multiply(geo.plane.matrix, geo.xform.matrix);
         ctx.transform(...m.dataArray);
     }

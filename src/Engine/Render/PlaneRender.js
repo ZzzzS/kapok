@@ -1,7 +1,6 @@
 /**
  * Created by zzzz on 2017/6/3.
  */
-// @flow
 "use strict";
 
 import Render from './Render';
@@ -13,7 +12,7 @@ const vectorRender = new VectorRender;
 const pointRender = new PointRender;
 
 export default class PlaneRender extends Render {
-    geometryRender(ctx: Object, geo: Plane) {
+    geometryRender(ctx, geo) {
         const size = this.config.planeVectorSize;
         const xAxis = geo.xAxis;
         const yAxis = geo.yAxis;

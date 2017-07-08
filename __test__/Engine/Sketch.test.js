@@ -3,18 +3,9 @@
  */
 "use strict";
 
+require("Canvas");
+require("Window");
 import Sketch from '../../src/Engine/Sketch.js';
-
-HTMLCanvasElement.prototype.getContext = function () {
-    return {
-        canvas: {
-            addEventListener: function () {}
-        },
-        clearRect: function () {}
-    }
-};
-
-window.requestAnimationFrame = function () {};
 
 describe('Sketch初始化', () => {
     test('参数为option.id', () => {

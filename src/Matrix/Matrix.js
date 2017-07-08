@@ -31,7 +31,12 @@ export default class Matrix {
 
     static inverse(m) {
         const svgMatrix = m._svgMatrix.inverse();
-        return new Matrix([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
+        return new this([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
+    }
+
+    copy() {
+        const svgMatrix = this._svgMatrix;
+        return new this.constructor([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
     }
 
     multiply(another) {
@@ -50,7 +55,7 @@ export default class Matrix {
         const matrixA = a.svgMatrix;
         const matrixB = b.svgMatrix;
         const svgMatrix = matrixA.multiply(matrixB);
-        return new Matrix([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
+        return new this([svgMatrix.a, svgMatrix.b, svgMatrix.c, svgMatrix.d, svgMatrix.e, svgMatrix.f]);
     }
 
     get a() {

@@ -2,17 +2,17 @@
  * Created by zzzz on 2017/5/28.
  */
 "use strict";
-import Vector from '../../src/Geometry/Vector';
-import GeometryType from '../../src/constants/GeometryType';
 
-document.createElementNS = () => {
-    return {
-        createSVGMatrix: () => {}
-    }
-};
+require("SVGMatrix");
+import Vector from '../../src/Geometry/Vector';
+
+let vect;
+
+beforeEach(() => {
+    vect = new Vector();
+});
 
 test('Vector的默认值为{x: 0, y: 0}', () => {
-    const vect = new Vector();
     expect(vect.x).toBe(0);
     expect(vect.y).toBe(0);
 });
@@ -37,7 +37,16 @@ test('当new Vector带参数时，必须同时提供两个非0的number参数, �
     expect(vect.y).toBe(100);
 });
 
-test(`GeometryType === ${GeometryType.VECTOR}`, () => {
-    const vect = new Vector();
-    expect(vect.geometryType).toBe(GeometryType.VECTOR);
+test("vect.geometryType", () => {
+    expect(vect.geometryType.toLowerCase()).toContain("vector");
+});
+
+test("vect.copy", () => {
+    const newVect = vect.copy();
+    expect(newVect.geometryType.toLowerCase()).toContain("vector");
+    expect(newVect.x).toBe(vect.x);
+    expect(newVect.y).toBe(vect.x);
+    expect(newVect.plane.dataArray).toEqual(vect.plane.dataArray);
+    expect(newVect.plane == vect.plane).toBeFalsy();
+    expect(newVect == vect).toBeFalsy();
 });

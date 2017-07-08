@@ -5,7 +5,7 @@
 import GeometryBase from './GeometryBase';
 import GeometryType from '../constants/GeometryType';
 import typeUtil from '../utils/typeUtil';
-import Matrix from '../Math/Matrix';
+import Matrix from '../Matrix/Matrix';
 
 export default class Vector extends GeometryBase{
     constructor(x, y, plane) {
@@ -20,23 +20,27 @@ export default class Vector extends GeometryBase{
         super.setDefault(...args);
         this._x = 0;
         this._y = 0;
-        this._geometryType = GeometryType.VECTOR;
+        this._inheritanceChain.push(GeometryType.VECTOR);
     };
 
+    copy() {
+        return new this.constructor(this.x, this.y, this.plane);
+    }
+
     subtract(vect){
-        return new Vector(vect.x - this.x, vect.y - this.y);
+        return new this.constructor(vect.x - this.x, vect.y - this.y);
     }
 
     static subtract(vectA, vectB) {
-        return new Vector(vectB.x - vectA.x, vectB.y - vectA.y);
+        return new this(vectB.x - vectA.x, vectB.y - vectA.y);
     }
 
     add(vect) {
-        return new Vector(vect.x + this.x, vect.y + this.y);
+        return new this.constructor(vect.x + this.x, vect.y + this.y);
     }
 
     static add(vectA, vectB) {
-        return new Vector(vectB.x + vectA.x, vectB.y + vectA.y);
+        return new this(vectB.x + vectA.x, vectB.y + vectA.y);
     }
     
     get x() {
@@ -58,7 +62,7 @@ export default class Vector extends GeometryBase{
 
     get positionOfWorld() {
         const m = Matrix.multiply(this.plane.matrix, this.xform.matrix);
-        return Vector.multiplyMatrix(this, m);
+        return this.constructor.multiplyMatrix(this, m);
     }
 
     get norm() {
@@ -77,7 +81,7 @@ export default class Vector extends GeometryBase{
     static multiplyMatrix(vector, matrix) {
         const x = vector.x * matrix.a + vector.y * matrix.c + matrix.e;
         const y = vector.x * matrix.b + vector.y * matrix.d + matrix.f;
-        return new Vector(x, y);
+        return new this(x, y);
     }
 
 };

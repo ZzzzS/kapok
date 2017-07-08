@@ -16,5 +16,6 @@ export default Object.create(null, {
     LINE: { value: 'Line', enumerable: true },
     POLYGON: { value: 'Polygon', enumerable: true },
     PLANE: { value: 'Plane', enumerable: true },
+    XFORM: { value: 'Xform', enumerable: true },
     RECTANGLE: { value: 'rectangle', enumerable: true }
 });

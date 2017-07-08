@@ -1,20 +1,30 @@
 /**
  * Created by zzzz on 2017/5/30.
  */
-import Matrix from '../Math/Matrix';
-import typeof Vector from './Vector';
+import Matrix from '../Matrix/Matrix';
 import GeometryType from '../constants/GeometryType';
 import typeUtil from '../utils/typeUtil';
 
 export class Xform {
     constructor(matrix) {
-        if (matrix && Matrix.isMatrix(matrix)) {
+        this._inheritanceChain = [];
+        this.setDefault();
+
+        if (matrix && typeUtil.isMatrix(matrix)) {
             this._matrix = new Matrix(matrix.dataArray);
         } else if (matrix && typeUtil.isArray(matrix)) {
             this._matrix = new Matrix(matrix);
         } else {
             this._matrix = new Matrix;
         }
+    }
+
+    setDefault() {
+        this._inheritanceChain.push(GeometryType.XFORM);
+    }
+
+    multiply(plane) {
+        this._matrix.multiply(plane);
     }
 
     translate(x, y) {
@@ -33,11 +43,11 @@ export class Xform {
 export default class Plane extends Xform{
     constructor(matrix) {
         super(matrix);
-        this.setDefault();
     }
 
-    setDefault() {
-        this._geometryType = GeometryType.PLANE;
+    setDefault(...args) {
+        super.setDefault(...args);
+        this._inheritanceChain.push(GeometryType.PLANE);
     }
 
     get xAxis(){
@@ -63,14 +73,14 @@ export default class Plane extends Xform{
         const Point = require("./Point").default;
         return new Point(this._matrix.e, this._matrix.f);
     }
-    set origin(val) {
-        if (val instanceof Vector) {
-            this._matrix.e = val.x;
-            this._matrix.f = val.y;
+    set origin(value) {
+        if (typeUtil.isVector(value)) {
+            this._matrix.e = value.x;
+            this._matrix.f = value.y;
         }
     }
 
     get geometryType() {
-        return this._geometryType;
+        return this._inheritanceChain[this._inheritanceChain.length - 1];
     }
 }

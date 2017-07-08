@@ -1,8 +1,8 @@
 /**
  * Created by zzzz on 2017/5/29.
  */
-/* @flow */
 "use strict";
+
 import PointRender from './PointRender';
 import PolygonRender from './PolygonRender';
 import VectorRender from './VectorRender';
@@ -16,12 +16,7 @@ const vectorRender = new VectorRender;
 const planeRender = new PlaneRender;
 const lineRender = new LineRender;
 
-const RenderMapping: {
-    [renderName: GeometryType]: {
-        type: string,
-        render: Function
-    }
-} = {
+const RenderMapping = {
     [`${GeometryType.POINT}`]: {
         type: GeometryType.POINT,
         render: pointRender.render.bind(pointRender)

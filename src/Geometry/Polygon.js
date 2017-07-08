@@ -7,19 +7,26 @@ import Point from './Point';
 import GeometryType from '../constants/GeometryType';
 
 export default class Polygon extends GeometryBase {
-    constructor() {
-        super();
+    constructor(array, plane) {
+        super(plane);
 
-        if (arguments.length < 4) {
-            throw(new TypeError('Polygon should have at least 4 vertexList.'));
+        if (!array || (array && array.length < 4)) {
+            console.warn('Polygon should have at least 4 vertexList.');
         } else {
-            this._vertexList = [].slice.call(arguments);
+            this._vertexList = [].slice.call(array);
         }
     }
 
-    setDefault() {
-        super.setDefault();
-        this._geometryType = GeometryType.POLYGON;
+    setDefault(...args) {
+        super.setDefault(...args);
+        this._inheritanceChain.push(GeometryType.POLYGON);
+
+        this._vertexList = [
+            new Point(0, 0),
+            new Point(10, 0),
+            new Point(10, 10),
+            new Point(0, 10)
+        ]
     }
 
     static createFromArray() {
@@ -36,7 +43,7 @@ export default class Polygon extends GeometryBase {
                 pointArray.push(new Point(numArray[i], numArray[i + 1]));
             }
 
-            return new Polygon(...pointArray);
+            return new this(pointArray);
         }
     }
 

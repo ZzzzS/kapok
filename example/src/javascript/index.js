@@ -3,7 +3,7 @@ require('./drawPoints');
 require('./drawLines');
 
 import Sketch from '../../../src/index';
-import Matrix from '../../../src/Math/Matrix';
+import Matrix from '../../../src/Matrix/Matrix';
 import Vector from '../../../src/Geometry/Vector';
 import Point from '../../../src/Geometry/Point';
 import Plane from '../../../src/Geometry/Plane';
@@ -18,8 +18,6 @@ const sketch = new Sketch({id: 'sketch'});
 const vect = new Vector(30, 50);
 const line = new Line(new Point(20, 20), new Point(50, 30));
 console.log(line);
-console.log(pt1 instanceof Point);
-console.log(pt1 instanceof Vector);
 console.log(new Matrix([1, 0, 0, 1, 50, 100]));
 
 const pl = new Plane(new Matrix([1, 0, 0, 1, 50, 100]));

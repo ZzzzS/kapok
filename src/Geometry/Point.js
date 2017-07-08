@@ -8,6 +8,6 @@ import GeometryType from '../constants/GeometryType';
 export default class Point extends Vector{
     setDefault(...args) {
         super.setDefault(...args);
-        this._geometryType = GeometryType.POINT;
+        this._inheritanceChain.push(GeometryType.POINT);
     };
 };
