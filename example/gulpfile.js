@@ -29,7 +29,7 @@ gulp.task('sass', function () {
         .pipe(gulpif(process.env.NODE_ENV === 'development', sourcemaps.init()))
             .pipe(gulpif(process.env.NODE_ENV === 'production', cleanCSS({compatibility: 'ie8'})))
         .pipe(gulpif(process.env.NODE_ENV === 'development', sourcemaps.write()))
-        .pipe(gulp.dest('./dist/css'))
+        .pipe(process.env.NODE_ENV === 'production' ? gulp.dest('../docs/css') : gulp.dest('./dist/css'))
         .pipe(notify({ message: 'Style task complete' }));
 });
 
@@ -40,7 +40,7 @@ gulp.task('html', function() {
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(gulp.dest('dist/'))
+        .pipe(process.env.NODE_ENV === 'production' ? gulp.dest('../docs/') : gulp.dest('dist/'))
         .pipe(notify({ message: 'Html task complete' }));
 });
 
@@ -48,7 +48,7 @@ gulp.task('html', function() {
 gulp.task('image', function() {
     return gulp.src('src/image/**/*')
         .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
-        .pipe(gulp.dest('dist/res'))
+        .pipe(process.env.NODE_ENV === 'production' ? gulp.dest('../docs/res') : gulp.dest('dist/res'))
         .pipe(notify({ message: 'image task complete' }));
 });
 
@@ -56,12 +56,17 @@ gulp.task('image', function() {
 gulp.task('script', function() {
     return gulp.src('src/javascript/index.js')
         .pipe(webpack( require('./webpack.config.js') ))
-        .pipe(gulp.dest('dist/js'))
+        .pipe(process.env.NODE_ENV === 'production' ? gulp.dest('../docs/js') : gulp.dest('dist/js'))
         .pipe(notify({ message: 'script task complete' }));
 });
 
 // clean
 gulp.task('clean', function() {
+    if (process.env.NODE_ENV === 'production') {
+        return gulp.src(['../docs/css', '../docs/js', '../docs/res', '../docs/*.html'], {read: false})
+            .pipe(clean())
+            .pipe(notify({ message: 'clean task complete' }));
+    }
     return gulp.src(['dist/css', 'dist/js', 'dist/res', 'dist/*.html'], {read: false})
         .pipe(clean())
         .pipe(notify({ message: 'clean task complete' }));
