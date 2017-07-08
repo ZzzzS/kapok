@@ -1,6 +1,7 @@
 /**
  * Created by zzzz on 2017/5/26.
  */
-import Sketch from './Sketch';
+"use strict";
+import Sketch from './Engine/Sketch';
 
 export default Sketch;

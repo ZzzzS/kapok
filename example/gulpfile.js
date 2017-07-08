@@ -18,6 +18,8 @@ const uglify = require('gulp-uglify');
 const webpack = require('gulp-webpack');
 const gulpif = require('gulp-if');
 
+const jsPaths = ['src/javascript/**/*.js', '../src/**/*.js'];
+
 
 // style
 gulp.task('sass', function () {
@@ -67,9 +69,9 @@ gulp.task('clean', function() {
 
 // watch
 gulp.task('watch', function () {
-    gulp.watch(['src/javascript/**/*.js', '../src/**/*.js'], express('server.js'));
+    gulp.watch(jsPaths, express('server.js'));
     gulp.watch('src/style/**/*.scss', ['sass']);
-    gulp.watch(['src/javascript/**/*.js', '../src/**/*.js'], ['script']);
+    gulp.watch(jsPaths, ['script']);
     gulp.watch('src/image/**/*', ['image']);
     gulp.watch('src/**/*.html', ['html']);
 });
